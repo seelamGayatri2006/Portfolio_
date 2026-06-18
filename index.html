@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="images/logo.jpg" type="image/x-icon">
+<title>Seelam Gayatri</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#0d2010;color:#fff;font-family:'Barlow',sans-serif;overflow-x:hidden}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 40px;
+}
+.nav-logo{
+  font-family:'Dancing Script',cursive;font-size:2.2rem;color:#fff;
+  text-decoration:none;cursor:pointer;
+  position:absolute;left:50%;transform:translateX(-50%);
+  white-space:nowrap;
+}
+.hamburger{
+  background:none;border:none;cursor:pointer;
+  display:flex;flex-direction:column;gap:5px;padding:4px;z-index:210;
+}
+.hamburger span{display:block;width:26px;height:2px;background:#fff;border-radius:2px;}
+.connect-btn{
+  background:transparent;color:#fff;border:2px solid #fff;
+  border-radius:999px;padding:10px 28px;font-size:.9rem;font-weight:600;
+  font-family:'Barlow',sans-serif;cursor:pointer;text-decoration:none;
+  transition:background .2s,color .2s;
+}
+.connect-btn:hover{background:#fff;color:#0d2010;}
+
+/* ── MENU OVERLAY ── */
+.menu-overlay{
+  position:fixed;inset:0;background:#000;z-index:190;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:0 0 0 100px;
+  opacity:0;pointer-events:none;
+  transition:opacity .35s ease;
+}
+.menu-overlay.open{opacity:1;pointer-events:all;}
+.menu-close{
+  position:absolute;top:22px;left:40px;
+  background:none;border:none;color:#fff;font-size:1.8rem;
+  cursor:pointer;z-index:210;line-height:1;font-weight:300;
+}
+.menu-overlay a{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(3rem,7vw,5.5rem);
+  font-weight:800;text-transform:uppercase;
+  color:rgba(255,255,255,.85);text-decoration:none;
+  letter-spacing:.01em;padding:10px 0;cursor:pointer;
+  transition:color .2s;display:block;
+}
+.menu-overlay a:hover{color:#4dbe7a;}
+
+/* ── PAGES ── */
+.page{display:none;}
+.page.active{display:block;}
+
+/* ── HOME PAGE ── */
+#page-home #hero{
+  min-height:100vh;display:flex;align-items:center;
+  justify-content:space-between;
+  padding:100px 5% 60px 8%;gap:20px;
+}
+.hero-name{
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:clamp(5rem,11vw,12rem);
+  font-weight:900;line-height:.88;
+  text-transform:uppercase;letter-spacing:-.02em;
+  flex:1;min-width:0;
+}
+.hero-name .letter{
+  display:inline-block;opacity:0;
+  animation:dropIn .5s cubic-bezier(.22,.61,.36,1) forwards;
+}
+@keyframes dropIn{
+  from{opacity:0;transform:translateY(-50px) rotate(-6deg);}
+  to{opacity:1;transform:translateY(0) rotate(0);}
+}
+.hero-right{
+  display:flex;flex-direction:column;align-items:center;
+  gap:22px;flex-shrink:0;width:clamp(240px,26vw,400px);
+}
+.hero-photo{
+  width:100%;aspect-ratio:1/1.05;border-radius:28px;
+  object-fit:cover;object-position:top center;display:block;
+}
+.resume-pill{
+  background:#fff;color:#111;border:none;border-radius:999px;
+  padding:13px 42px;font-size:.95rem;font-weight:600;
+  font-family:'Barlow',sans-serif;cursor:pointer;
+  text-decoration:none;display:inline-block;
+  transition:background .2s,transform .15s;
+}
+.resume-pill:hover{background:#ddd;transform:scale(1.04);}
+
+/* About */
+#page-home .about-sec{
+  padding:70px 8% 80px;
+  border-top:1px solid rgba(255,255,255,.07);
+}
+.about-title{
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;
+  font-size:2rem;text-transform:uppercase;
+  letter-spacing:.1em;text-align:center;margin-bottom:30px;
+}
+.about-body{
+  font-size:1.05rem;font-weight:300;
+  color:rgba(255,255,255,.85);line-height:1.8;
+}
+
+/* Featured Projects on home */
+#page-home .feat-sec{
+  padding:60px 7% 80px;
+  border-top:1px solid rgba(255,255,255,.07);
+}
+.feat-title{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:clamp(1.8rem,3vw,2.5rem);text-transform:uppercase;
+  letter-spacing:.07em;text-align:center;margin-bottom:36px;
+}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+
+/* ── RESUME PAGE ── */
+#page-resume{padding:120px 8% 100px;}
+.page-big-title{
+  font-family:'Barlow Condensed',sans-serif;font-weight:900;
+  font-size:clamp(6rem,16vw,17rem);
+  text-transform:uppercase;letter-spacing:-.02em;
+  text-align:center;line-height:.85;margin-bottom:60px;
+}
+.work-sub{
+  font-family:'Barlow Condensed',sans-serif;font-weight:800;
+  font-size:1.8rem;text-transform:uppercase;
+  letter-spacing:.07em;text-align:center;margin-bottom:40px;
+}
+/* Timeline */
+.tl{position:relative;max-width:960px;margin:0 auto;}
+.tl::before{
+  content:'';position:absolute;left:50%;top:0;bottom:0;
+  width:1px;background:rgba(255,255,255,.12);
+  transform:translateX(-50%);
+}
+.tl-row{display:grid;grid-template-columns:1fr 1fr;margin-bottom:24px;}
+.tl-card{
+  background:rgba(255,255,255,.07);border-radius:14px;
+  padding:20px 24px;
+}
+.tl-row.left .tl-card{margin-right:44px;grid-column:1;}
+.tl-row.right .tl-card{margin-left:44px;grid-column:2;}
+.tl-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;}
+.tl-title{font-size:.95rem;font-weight:500;color:#fff;}
+.tl-year{font-size:.8rem;color:rgba(255,255,255,.55);white-space:nowrap;}
+.tl-co{font-size:.85rem;color:rgba(255,255,255,.45);}
+
+/* ── PROJECTS PAGE ── */
+#page-projects{padding:120px 5% 100px;}
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+/* ── CONTACT PAGE ── */
+#page-contact{background:#000;}
+.contact-wrap{
+  min-height:calc(100vh - 80px);
+  display:flex;align-items:center;
+  padding:120px 6% 60px 8%;
+  gap:80px;
+}
+.contact-left{flex:1;}
+.contact-heading{
+  font-family:'Barlow',sans-serif;font-weight:800;
+  font-size:clamp(3rem,6vw,5.5rem);
+  line-height:1.05;color:#fff;
+}
+.contact-right{
+  flex:1;display:flex;flex-direction:column;gap:32px;
+}
+.contact-field{display:flex;flex-direction:column;gap:8px;}
+.contact-field label{
+  font-size:.9rem;font-weight:500;color:rgba(255,255,255,.9);
+  letter-spacing:.02em;
+}
+.contact-field input,
+.contact-field textarea{
+  background:transparent;border:none;
+  border-bottom:1px solid rgba(255,255,255,.3);
+  color:#fff;font-family:'Barlow',sans-serif;
+  font-size:1rem;font-weight:300;
+  padding:8px 0;outline:none;resize:none;
+  transition:border-color .2s;
+}
+.contact-field input::placeholder,
+.contact-field textarea::placeholder{color:rgba(255,255,255,.35);}
+.contact-field input:focus,
+.contact-field textarea:focus{border-bottom-color:rgba(255,255,255,.8);}
+.contact-submit{
+  background:#fff;color:#111;border:none;
+  border-radius:999px;padding:16px 0;
+  font-size:1rem;font-weight:600;
+  font-family:'Barlow',sans-serif;
+  cursor:pointer;width:100%;
+  transition:background .2s,transform .15s;
+}
+.contact-submit:hover{background:#e5e5e5;transform:scale(1.02);}
+
+@media(max-width:700px){
+  .contact-wrap{flex-direction:column;gap:40px;padding-top:100px;}
+}
+
+/* ── SHARED CARD ── */
+.pcard{
+  position:relative;border-radius:16px;overflow:hidden;
+  display:block;text-decoration:none;color:#fff;
+  aspect-ratio:16/10;cursor:pointer;
+  transition:transform .3s ease;
+}
+.pcard:hover{transform:scale(1.02);}
+.pcard img.webIMG{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease;}
+.pcard:hover img.webIMG{transform:scale(1.06);}
+.pcard-overlay{
+  position:absolute;inset:0;
+  background:rgba(0,0,0,0.65);
+  opacity:0;transition:0.3s ease;
+  z-index:1;
+}
+.pcard:hover .pcard-overlay{opacity:1;}
+.pcard-icons{
+  position:absolute;top:12px;right:12px;
+  display:flex;gap:8px;opacity:0;transition:0.3s ease;
+  z-index:2;
+}
+.pcard:hover .pcard-icons{opacity:1;}
+.pcard-icons a{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(0,0,0,.7);border:1px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;text-decoration:none;
+}
+.pcard-icons img{width:16px;height:16px;filter:brightness(0) invert(1);}
+.pcard-name{
+  position:absolute;bottom:16px;left:16px;
+  font-family:'Barlow Condensed',sans-serif;font-weight:700;
+  font-size:clamp(1.4rem,2.5vw,2rem);
+  text-shadow:0 2px 10px rgba(0,0,0,.6);
+  z-index:2;
+}
+
+/* ── FOOTER ── */
+footer{
+  border-top:1px solid rgba(255,255,255,.07);
+  padding:40px 5%;
+  display:flex;align-items:center;justify-content:center;gap:24px;
+}
+footer a img{
+  width:28px;filter:brightness(0) invert(1);opacity:.6;
+  transition:opacity .2s;
+}
+footer a:hover img{opacity:1;}
+
+/* Page transition */
+.page{animation:fadeIn .35s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:800px){
+  #page-home #hero{flex-direction:column;padding-top:100px;align-items:flex-start;}
+  .hero-right{width:100%;max-width:300px;}
+  .feat-grid,.proj-grid{grid-template-columns:1fr;}
+  .tl::before{display:none;}
+  .tl-row{grid-template-columns:1fr;}
+  .tl-row.left .tl-card,.tl-row.right .tl-card{grid-column:1;margin:0 0 16px 0;}
+  .page-big-title{font-size:5rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <button class="hamburger" onclick="openMenu()">
+    <span></span><span></span><span></span>
+  </button>
+  <a class="nav-logo" onclick="showPage('home')">SEELAM</a>
+  <a class="connect-btn" onclick="showPage('contact')">Connect</a>
+</nav>
+
+<!-- MENU OVERLAY -->
+<div class="menu-overlay" id="menu">
+  <button class="menu-close" onclick="closeMenu()">&#x2715;</button>
+  <a onclick="navTo('home')">Home</a>
+  <a onclick="navTo('resume')">Resume</a>
+  <a onclick="navTo('projects')">Projects</a>
+  <a onclick="navTo('contact')">Contact</a>
+</div>
+
+<!-- ═══════════════ HOME PAGE ═══════════════ -->
+<div class="page active" id="page-home">
+  <div id="hero">
+    <h1 class="hero-name" id="heroName">SEELAM<br>GAYATRI</h1>
+    <div class="hero-right">
+      <img class="hero-photo" src="images/Img.jpeg" alt="Seelam Gayatri">
+      <a class="resume-pill" href="images/resume.pdf" target="_blank">Resume</a>
+    </div>
+  </div>
+
+  <div class="about-sec">
+    <h2 class="about-title">About Me</h2>
+    <p class="about-body">
+      I am Seelam Gayatri, a B.Tech CSE (AI &amp; ML) student passionate about Artificial Intelligence, Machine Learning, and Software Development. I enjoy building real-world projects using Python and AI technologies and am always eager to learn new skills and take on challenging opportunities.
+    </p>
+  </div>
+
+  <div class="feat-sec">
+    <h2 class="feat-title">Featured Projects</h2>
+    <div class="feat-grid">
+      <a class="pcard" onclick="showPage('projects')">
+        <img class="webIMG" src="images/crp.png" alt="Crime Rate Prediction">
+        <div class="pcard-overlay"></div>
+        <span class="pcard-name">Crime Rate Prediction</span>
+      </a>
+      <a class="pcard" onclick="showPage('projects')">
+        <img class="webIMG" src="images/spp.png" alt="Student Performance Prediction">
+        <div class="pcard-overlay"></div>
+        <span class="pcard-name">Student Performance Prediction</span>
+      </a>
+      <a class="pcard" onclick="showPage('projects')">
+        <img class="webIMG" src="images/llm.png" alt="LLM Model Comparison">
+        <div class="pcard-overlay"></div>
+        <span class="pcard-name">LLM-Model-Comparison</span>
+      </a>
+    </div>
+  </div>
+
+  <footer>
+    <a href="mailto:seelamgayatri18@gmail.com"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email"></a>
+    <a href="https://github.com/seelamGayatri2006" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub"></a>
+    <a href="https://www.linkedin.com/in/gayatri-seelam-2b6a78307/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn"></a>
+  </footer>
+</div>
+<!-- END page-home -->
+
+<!-- ═══════════════ RESUME PAGE ═══════════════ -->
+<div class="page" id="page-resume">
+  <h2 class="page-big-title">RESUME</h2>
+  <h3 class="work-sub">Experience</h3>
+
+  <div class="tl">
+
+    <div class="tl-row right">
+      <div class="tl-card">
+        <div class="tl-head">
+          <span class="tl-title">Data Specialist</span>
+          <span class="tl-year">Tata Group (Forage)</span>
+        </div>
+        <span class="tl-co">Completed</span>
+        <p>Completed a job simulation focused on AI-powered data analytics and strategic decision-making for Financial Services. Performed EDA using GenAI tools, built predictive modeling frameworks, and designed AI-driven collections strategies with ethical AI considerations.</p>
+      </div>
+    </div>
+
+    <div class="tl-row left">
+      <div class="tl-card">
+        <div class="tl-head">
+          <span class="tl-title">GenAI Data Analytics Virtual Intern</span>
+          <span class="tl-year">TCS (Forage)</span>
+        </div>
+        <span class="tl-co">Completed</span>
+        <p>Worked on exploratory data analysis, risk profiling, AI-based delinquency prediction, business reporting, and data storytelling for collections analysis.</p>
+      </div>
+    </div>
+
+    <div class="tl-row right">
+      <div class="tl-card">
+        <div class="tl-head">
+          <span class="tl-title">Software Engineering Virtual Intern</span>
+          <span class="tl-year">JPMorgan Chase (Forage)</span>
+        </div>
+        <span class="tl-co">Completed</span>
+        <p>Built backend components using REST APIs, Kafka integration, and H2 database. Gained hands-on experience in software engineering workflows and debugging.</p>
+      </div>
+    </div>
+
+    <div class="tl-row left">
+      <div class="tl-card">
+        <div class="tl-head">
+          <span class="tl-title">Technology Consulting Virtual Intern</span>
+          <span class="tl-year">Accenture Australia (Forage)</span>
+        </div>
+        <span class="tl-co">Completed</span>
+        <p>Worked on project kickoff, requirements gathering, agile story creation, and voting application design while learning consulting workflows.</p>
+      </div>
+    </div>
+
+    <div class="tl-row right">
+      <div class="tl-card">
+        <div class="tl-head">
+          <span class="tl-title">Artificial Intelligence &amp; Machine Learning Intern</span>
+          <span class="tl-year">EduSkills</span>
+        </div>
+        <span class="tl-co">Completed</span>
+        <p>Learned ML workflows including data preprocessing, model training, and predictive analytics for AI applications.</p>
+      </div>
+    </div>
+
+    <div class="tl-row left">
+      <div class="tl-card">
+        <div class="tl-head">
+          <span class="tl-title">Data Analytics Virtual Intern</span>
+          <span class="tl-year">Deloitte Australia (Forage)</span>
+        </div>
+        <span class="tl-co">Completed</span>
+        <p>Built Tableau dashboards, analyzed datasets using Excel, and derived business insights through data visualization and analytics.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <a href="mailto:seelamgayatri18@gmail.com"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email"></a>
+    <a href="https://github.com/seelamGayatri2006" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub"></a>
+    <a href="https://www.linkedin.com/in/gayatri-seelam-2b6a78307/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn"></a>
+  </footer>
+</div>
+<!-- END page-resume -->
+
+<!-- ═══════════════ PROJECTS PAGE ═══════════════ -->
+<div class="page" id="page-projects">
+  <h2 class="page-big-title">PROJECTS</h2>
+
+  <div class="proj-grid">
+
+    <div class="pcard">
+      <img class="webIMG" src="images/crp.png" alt="Crime Rate">
+      <div class="pcard-overlay"></div>
+      <div class="pcard-icons">
+        <a href="https://github.com/seelamGayatri2006/Crime-Rate-Predictor" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png"></a>
+        <a href="https://crime-rate-predictor-3.onrender.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/841/841364.png"></a>
+      </div>
+      <span class="pcard-name">Crime Rate Prediction</span>
+    </div>
+
+    <div class="pcard">
+      <img class="webIMG" src="images/spp.png" alt="Student Performance">
+      <div class="pcard-overlay"></div>
+      <div class="pcard-icons">
+        <a href="https://github.com/seelamGayatri2006/student-performance-predictor" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png"></a>
+        <a href="https://student-performance-predictor-jxy4.onrender.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/841/841364.png"></a>
+      </div>
+      <span class="pcard-name">Student Performance</span>
+    </div>
+
+    <div class="pcard">
+      <img class="webIMG" src="images/llm.png" alt="LLM Comparison">
+      <div class="pcard-overlay"></div>
+      <div class="pcard-icons">
+        <a href="https://github.com/seelamGayatri2006/LLM-model-Comparisions-" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png"></a>
+        <a href="https://modelscomparision.streamlit.app/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/841/841364.png"></a>
+      </div>
+      <span class="pcard-name">LLM Comparison</span>
+    </div>
+
+    <div class="pcard">
+      <img class="webIMG" src="images/HMS.png" alt="HMS">
+      <div class="pcard-overlay"></div>
+      <div class="pcard-icons">
+        <a href="https://github.com/seelamGayatri2006/HMS-Web" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png"></a>
+      </div>
+      <span class="pcard-name">HMS Project</span>
+    </div>
+
+    <div class="pcard">
+      <img class="webIMG" src="images/nexus.png" alt="Nexus">
+      <div class="pcard-overlay"></div>
+      <div class="pcard-icons">
+        <a href="https://github.com/seelamGayatri2006/Nexus" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png"></a>
+        <a href="https://nexus-gy1w.onrender.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/841/841364.png"></a>
+      </div>
+      <span class="pcard-name">Nexus</span>
+    </div>
+
+    <div class="pcard">
+      <img class="webIMG" src="images/env.png" alt="Env">
+      <div class="pcard-overlay"></div>
+      <div class="pcard-icons">
+        <a href="https://github.com/seelamGayatri2006/Env" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png"></a>
+        <a href="https://env-monitor-project.onrender.com" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/841/841364.png"></a>
+      </div>
+      <span class="pcard-name">Env Monitor</span>
+    </div>
+
+    <div class="pcard">
+      <img class="webIMG" src="images/planner.png" alt="To Do">
+      <div class="pcard-overlay"></div>
+      <div class="pcard-icons">
+        <a href="https://github.com/seelamGayatri2006/To-do-list" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png"></a>
+        <a href="https://seelamgayatri2006.github.io/To-do-list/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/841/841364.png"></a>
+      </div>
+      <span class="pcard-name">To Do List</span>
+    </div>
+
+    <div class="pcard">
+      <img class="webIMG" src="images/emotion.jpg" alt="Emotion Hub">
+      <div class="pcard-overlay"></div>
+      <div class="pcard-icons">
+        <a href="https://github.com/seelamGayatri2006/Emotions_Hub" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png"></a>
+      </div>
+      <span class="pcard-name">Emotion Hub</span>
+    </div>
+
+  </div>
+
+  <footer>
+    <a href="mailto:seelamgayatri18@gmail.com"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email"></a>
+    <a href="https://github.com/seelamGayatri2006" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub"></a>
+    <a href="https://www.linkedin.com/in/gayatri-seelam-2b6a78307/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn"></a>
+  </footer>
+</div>
+<!-- END page-projects -->
+
+<!-- ═══════════════ CONTACT PAGE ═══════════════ -->
+<div class="page" id="page-contact">
+  <div class="contact-wrap">
+    <div class="contact-left">
+      <h2 class="contact-heading">Get In Touch</h2>
+    </div>
+    <div class="contact-right">
+      <div class="contact-field">
+        <label>Name</label>
+        <input type="text" placeholder="Steve Smith">
+      </div>
+      <div class="contact-field">
+        <label>Email</label>
+        <input type="email" placeholder="Stevesmith@gmail.com">
+      </div>
+      <div class="contact-field">
+        <label>Message</label>
+        <textarea rows="4" placeholder="Message..."></textarea>
+      </div>
+      <button class="contact-submit">Submit</button>
+    </div>
+  </div>
+  <footer>
+    <a href="mailto:seelamgayatri18@gmail.com"><img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email"></a>
+    <a href="https://github.com/seelamGayatri2006" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub"></a>
+    <a href="https://www.linkedin.com/in/gayatri-seelam-2b6a78307/" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn"></a>
+  </footer>
+</div>
+<!-- END page-contact -->
+
+<script>
+// ── SPA ROUTER ──
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  var pg = document.getElementById('page-' + id);
+  if (pg) pg.classList.add('active');
+  window.scrollTo(0, 0);
+  if (id === 'home') animateHero();
+}
+
+function openMenu() {
+  document.getElementById('menu').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeMenu() {
+  document.getElementById('menu').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function navTo(id) {
+  closeMenu();
+  setTimeout(function(){ showPage(id); }, 300);
+}
+
+// ── HERO LETTER ANIMATION ──
+function animateHero() {
+  var el = document.getElementById('heroName');
+  if (!el) return;
+  var html = el.innerHTML;
+  var i = 0;
+  // split on <br> keeping the tag
+  var parts = html.split('<br>');
+  el.innerHTML = parts.map(function(line) {
+    return line.split('').map(function(ch) {
+      var d = i++ * 45;
+      return '<span class="letter" style="animation-delay:' + d + 'ms">' + ch + '</span>';
+    }).join('');
+  }).join('<br>');
+}
+
+animateHero();
+</script>
+</body>
+</html>
